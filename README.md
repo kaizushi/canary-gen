@@ -25,7 +25,7 @@ You can see it in action alongside picosite over at the website for my businesse
 Getting Started
 ===============
 
-You need to clone this Git repository and edit the canary-gen.py script. There are settings at the top which are important for the template system. You should edit your template as you see fit. If you are finding setting up too hard I recommend you drop by my hosting business [KLOS Hosting](https://kloshost.online) and if you biy hosting I will help you setup this script with it.
+You need to clone this Git repository and edit the canary-gen.py script. There are settings at the top which are important for the template system. You should edit your template as you see fit. If you are finding setting up too hard I recommend you drop by my hosting business [KLOS Hosting](https://kloshost.online) and if you buy hosting I will help you setup this script for your account.
 
 About Kaizushi
 ==============
