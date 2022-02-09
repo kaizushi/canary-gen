@@ -14,7 +14,7 @@ http://kaizushih5iec2mxohpvbt5uaapqdnbluaasa2cmsrrjtwrbx46cnaid.onion/
 
 You can find my public key on the contact page on the site above.
 
-Notice by %%NAME%% <%%EMAIL%%> on %%DATE%% at %%TIME%%
+Notice by %%NAME%% <%%EMAIL%%> on %%DATE%% at %%TIME%% UTC
 
 Keys used in signature:
 	37A8503041AC4D38851E36A8FC99700CB695B969
