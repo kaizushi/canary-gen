@@ -6,14 +6,13 @@ from settings import realname, emails, host, path, template, canaries, enable_ne
 
 cmd_deps = ["gpg2", "scp"]
 
-# below is a bunch of boilerplate stuff
+# the next ~50 lines are all safety and ensuring the deps are installed
 
-#checks if you have the software you need
 class MissingSoftwareError(Exception):
     """You are missing some of the required software to use this program."""
     pass
 
-
+# this checks if commands exist on the system
 def commandCheck(command):
     if (os.system("command -v " + command + " &> /dev/null") != 0):
         print("The command '" + command + "' does not exist on your system.")
