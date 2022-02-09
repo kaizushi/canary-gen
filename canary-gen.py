@@ -78,6 +78,8 @@ class NewsAPIException(Exception):
     """There was an error reported from the API while fetching news!"""
     pass
 
+email = emails[0]
+print("Primary email set to " + email)
 
 #
 #  ACTUAL PROGRAM STARTS HERE
