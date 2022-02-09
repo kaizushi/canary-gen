@@ -6,6 +6,21 @@ from settings import realname, emails, host, path, template, canaries, enable_ne
 
 # below is a bunch of boilerplate stuff
 
+#checks if you have the software you need
+class MissingSoftwareError(Exception):
+    """You are missing some of the required software to use this program."""
+    pass
+
+if (os.system("command -v gpg2") != 0):
+    print("Could not detect gpg2 in your PATH variable.")
+    raise MissingSoftwareError
+
+if (os.system("command -v scp") != 0):
+    print("Could not detect scp in your PATH variable.")
+    raise MissingSoftwareError
+
+# check if the gpg and scp commands exist
+
 class MissingDependenciesError(Exception):
     """You are missing dependencies required by the news feature."""
     pass
