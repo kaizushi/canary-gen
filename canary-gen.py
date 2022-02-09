@@ -133,8 +133,6 @@ def uploadTheCanary():
 
 print (parseNews(fetchNews()))
 
-exit
-
 comment = input("Comment:")
 createCanaryPlaintext()
 clearsignCanary()
