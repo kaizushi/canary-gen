@@ -8,6 +8,14 @@ A canary is a cryptographically signed message regularly updated to let people k
 
 One might think a canary is useless because one could be forced into uploading it in the first place. However you should be able to excercise your right to not incriminate yourself in a way that forbids this. Canaries work in **all good countries** and could save those using your service, if it becomes compromised.
 
+There is an issue with signed messages where they can be used against you. A vague signed message that says 'I am Albert Einstein' and nothing else could be deployed by adverseries to trick people that they are you. A good canary has a good amount of referrent information. In the case of a canary, protecting a website, is to mention the address of that website.
+
+In the case of an onion website on Tor, which I use this for, mentioning the address in the canary binds it to the cryptography behind the hidden service itself. It therefore inherits the trust of that onion address where the canary is displayed. The more references with a canary to things it involves the merrier, as long as they are secure and reliable.
+
+This software includes some news headlines which are fetched from a JSON API provided by [NewsAPI](https://newsapi.org) as proof it was made recently and not in the past. 
+
+I also like to include a canary the GPG fingerprints for the keys signing it. While this information is in the PGP signature itself, I make it easier to find out of user friendliness, so users can quickly find that information.
+
 Features
 ========
 
