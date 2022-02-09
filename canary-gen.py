@@ -1,10 +1,20 @@
 #!/usr/bin/python3
 import os
 import time
-from urllib.request import urlopen
-import json
 
 from settings import realname, emails, host, path, template, canaries, enable_news, news_apikey, news_numitems, news_country, news_category
+
+class MissingDependenciesError(Exception):
+    """You are missing dependencies required by the news feature."""
+    pass
+
+if (enable_news):
+    try:
+        from urllib.request import urlopen
+        import json
+    except ImportError:
+        print("You are missing dependencies for the news feature.")
+        raise MissingDependenciesError
 
 class SettingsNotFinishedError(Exception):
     """Configuration file not properly edited"""
