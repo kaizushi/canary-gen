@@ -10,9 +10,10 @@ import json
 # I would be happy to send you the values for below so your canary automatically
 # uploads to your site on my hosting.
 #
+
 realname = "Roger West" #Simple enough
 emails = ["KEY 1", "KEY 2"] #The email or fingerprint of the keys you sign with
-email = "kaizushi@infantile.us" #Your primary email address
+email = "roger@west.com" #Your primary email address
 host = "" #the SSH server used by scp to upload your canary
 path = "" #the location for the canary on the remote server
 
@@ -28,6 +29,14 @@ news_country = "us"     #news country of origin
 news_category = "technology" #the news topic to use (check newsapi.org for valid ones)
 
 global outputFile
+
+class NewsFetchException(Exception):
+    """There was an error fetching the news!"""
+    pass
+
+class NewsAPIException(Exception):
+    """There was an error reported from the API while fetching news!"""
+    pass
 
 def fetchNews():
     global news_country 
@@ -45,15 +54,17 @@ def fetchNews():
             response = urlopen(url)
         except Exception as e:
             print("Oops!", e.__class__, "occurred.")
-            raise Exception(e)
+            raise NewsFetchException
 
         return response
-    
 
 def parseNews(response):
     global news_numitems
 
     response = json.loads(response.read())
+
+    if (response['status'] == "error"):
+        raise NewsAPIException
 
     total_items = response['totalResults']
     articles = response['articles']
@@ -121,9 +132,14 @@ def createCanaryPlaintext():
         # headlines is called here so it runs first, in case it can't reach the webapi
         try:
             headlines = parseNews(fetchNews())
-        except Exception as e:
-            print("There was an error loading the news!")
+        except NewsFetchException:
+            print("Could not fetch news from the Internet. See above for more info. Aborting!")
             return
+        except NewsAPIException:
+            print("The newsapi.org web API has reported an error. Aborting!")
+            return
+
+        print("News items downloaded...")
 
         filename = canaries + dateString("fn") + "-" + timeString("fn") + ".txt"
         outputFile = filename
@@ -139,8 +155,6 @@ def uploadTheCanary():
     global outputFile
     print("Uploading canary...")
     os.system("scp " + outputFile + ".asc " + host + ":" + path)
-
-print (parseNews(fetchNews()))
 
 comment = input("Comment:")
 createCanaryPlaintext()
