@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import os
 import time
+from datetime import datetime, timezone
 
 # the next ~50 lines are all safety and ensuring the deps are installed
 
@@ -67,6 +68,8 @@ try:
 except ImportError:
     pass
 
+email = emails[0]
+
 global outputFile
 
 # some exceptions for things going wrong in the news fetch
@@ -78,8 +81,7 @@ class NewsAPIException(Exception):
     """There was an error reported from the API while fetching news!"""
     pass
 
-email = emails[0]
-print("Primary email set to " + email)
+dt = datetime.now(timezone.utc)
 
 #
 #  ACTUAL PROGRAM STARTS HERE
@@ -137,18 +139,22 @@ def parseNews(response):
 
 # This gets the date as formats it either for a filename or human readable
 def dateString(type):
+        global dt
+
         if (type == "fn"): #filename
-                return time.strftime("%y-%m-%d")
+                return dt.strftime("%y-%m-%d")
         if (type == "hr"): #human readable
-                return time.strftime("%d-%m-%y")
+                return dt.strftime("%d-%m-%y")
         return dateString("hr") #default
 
 # same as above but with time
 def timeString(type):
+        global dt
+
         if (type == "fn"):
-                return time.strftime("%H-%M-%S")
+                return dt.strftime("%H-%M-%S")
         if (type == "hr"):
-                return time.strftime("%H:%M:%S")
+                return dt.strftime("%H:%M:%S")
         return timeString("hr")
 
 # this takes a string and some values to replace and returns a string
