@@ -4,10 +4,14 @@ import time
 
 from settings import realname, emails, host, path, template, canaries, enable_news, news_apikey, news_numitems, news_country, news_category
 
+# below is a bunch of boilerplate stuff
+
 class MissingDependenciesError(Exception):
     """You are missing dependencies required by the news feature."""
     pass
 
+# if the news feature is enabled in settings, this tries to import its deps
+# if the deps are not there it raises the custom exception above to abort
 if (enable_news):
     try:
         from urllib.request import urlopen
@@ -20,6 +24,8 @@ class SettingsNotFinishedError(Exception):
     """Configuration file not properly edited"""
     pass
 
+# the settings.py file has a line called ignorant at the end that must be deleted
+# if it isn't then the exception defined above is raised to abort
 try:
     from settings import ignorant
     print("You need to configure the program first!")
@@ -29,6 +35,7 @@ except ImportError:
 
 global outputFile
 
+# some exceptions for things going wrong in the news fetch
 class NewsFetchException(Exception):
     """There was an error fetching the news!"""
     pass
@@ -37,6 +44,7 @@ class NewsAPIException(Exception):
     """There was an error reported from the API while fetching news!"""
     pass
 
+# literally fetches the news as a HTTPRequest object and returns it
 def fetchNews():
     global news_country 
     global news_category
@@ -57,6 +65,7 @@ def fetchNews():
 
         return response
 
+#parses the JSON in the HTTP response and returns a list of headlines
 def parseNews(response):
     global news_numitems
 
@@ -84,13 +93,15 @@ def parseNews(response):
 
     return output
 
+# This gets the date as formats it either for a filename or human readable
 def dateString(type):
         if (type == "fn"): #filename
                 return time.strftime("%y-%m-%d")
         if (type == "hr"): #human readable
                 return time.strftime("%d-%m-%y")
-        return dateString("hr")
+        return dateString("hr") #default
 
+# same as above but with time
 def timeString(type):
         if (type == "fn"):
                 return time.strftime("%H-%M-%S")
@@ -98,11 +109,7 @@ def timeString(type):
                 return time.strftime("%H:%M:%S")
         return timeString("hr")
 
-def sigLine(name, email, comment):
-        string = "Notice by " + name + " <" + email + "> on "     
-        string = string + dateString("hr") + " at " + timeString("hr")
-        return string
-
+# this takes a string and some values to replace and returns a string
 def replaceStrings(inString, name, email, comment):
         string = inString
         string = string.replace("%%NAME%%",name)
@@ -112,11 +119,13 @@ def replaceStrings(inString, name, email, comment):
         string = string.replace("%%COMMENT%%",comment)
         return string
 
+# this is much like above but takes the list of news headlines as well
 def replaceWithHeadline(inString, name, email, comment, headlines):
         string = replaceStrings(inString, name, email, comment)
         string = string.replace("%%HEADLINES%%",headlines) 
         return string
 
+# this runs GPG to do the actual signing of the message
 def clearsignCanary():
         global outputFile
         cmd = "gpg2 --verbose --clearsign "
@@ -124,6 +133,7 @@ def clearsignCanary():
             cmd = cmd + "-u " + addrs + " "
         os.system(cmd + outputFile)
 
+# this creates the canary itself from the template as files
 def createCanaryPlaintext():
         global outputFile
         global enable_news
@@ -150,11 +160,13 @@ def createCanaryPlaintext():
         tpl.close()
         new.close()
 
+# this uploads the canary to the system
 def uploadTheCanary():
     global outputFile
     print("Uploading canary...")
     os.system("scp " + outputFile + ".asc " + host + ":" + path)
 
+# this runs everything involved
 comment = input("Comment:")
 createCanaryPlaintext()
 clearsignCanary()
