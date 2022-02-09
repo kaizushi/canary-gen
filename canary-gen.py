@@ -2,13 +2,22 @@
 import os
 import time
 
-from settings import realname, emails, host, path, template, canaries, enable_news, news_apikey, news_numitems, news_country, news_category
+# the next ~50 lines are all safety and ensuring the deps are installed
+
+class MissingSettingsFileException(Exception):
+    """The settings.py file does not exist!"""
+    pass
+
+# check if the settings file even exists...
+try:
+    from settings import realname, emails, host, path, template, canaries, enable_news, news_apikey, news_numitems, news_country, news_category
+except ModuleNotFoundError:
+    print("You do not have a settings.py file on your system!")
+    raise MissingSettingsFileException
 
 cmd_deps = ["gpg2", "scp"]
 
-# the next ~50 lines are all safety and ensuring the deps are installed
-
-class MissingSoftwareError(Exception):
+class MissingSoftwareException(Exception):
     """You are missing some of the required software to use this program."""
     pass
 
@@ -16,18 +25,18 @@ class MissingSoftwareError(Exception):
 def commandCheck(command):
     if (os.system("command -v " + command + " &> /dev/null") != 0):
         print("The command '" + command + "' does not exist on your system.")
-        raise MissingSoftwareError
+        raise MissingSoftwareException
 
 #this loop uses the method above which will show each missing command
 cmd_fail = False
 for cmd in cmd_deps:
     try:
         commandCheck(cmd)
-    except MissingSoftwareError:
+    except MissingSoftwareException:
         cmd_fail = True
 
 if (cmd_fail):
-    raise MissingSoftwareError
+    raise MissingSoftwareException
 
 # check if the gpg and scp commands exist
 
@@ -68,6 +77,12 @@ class NewsFetchException(Exception):
 class NewsAPIException(Exception):
     """There was an error reported from the API while fetching news!"""
     pass
+
+
+#
+#  ACTUAL PROGRAM STARTS HERE
+#
+
 
 # literally fetches the news as a HTTPRequest object and returns it
 def fetchNews():
