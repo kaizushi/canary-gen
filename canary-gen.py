@@ -36,6 +36,7 @@ for cmd in cmd_deps:
     except MissingSoftwareException:
         cmd_fail = True
 
+#if anything above failed, abort
 if (cmd_fail):
     raise MissingSoftwareException
 
@@ -81,6 +82,7 @@ class NewsAPIException(Exception):
     """There was an error reported from the API while fetching news!"""
     pass
 
+#gets the current time as a datetime object
 dt = datetime.now(timezone.utc)
 
 #
@@ -159,12 +161,14 @@ def timeString(type):
 
 # this takes a string and some values to replace and returns a string
 def replaceStrings(inString, name, email, comment):
+        global enable_news
         string = inString
         string = string.replace("%%NAME%%",name)
         string = string.replace("%%EMAIL%%",email)
         string = string.replace("%%DATE%%",dateString("hr"))
         string = string.replace("%%TIME%%",timeString("hr"))
         string = string.replace("%%COMMENT%%",comment)
+        if (not enable_news): string = string.replace("%%HEADLINES%%","")
         return string
 
 # this is much like above but takes the list of news headlines as well
