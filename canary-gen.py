@@ -6,6 +6,17 @@ import json
 
 from settings import realname, emails, host, path, template, canaries, enable_news, news_apikey, news_numitems, news_country, news_category
 
+class SettingsNotFinishedError(Exception):
+    """Configuration file not properly edited"""
+    pass
+
+try:
+    from settings import ignorant
+    print("You need to configure the program first!")
+    raise SettingsNotFinishedError
+except ImportError:
+    pass
+
 global outputFile
 
 class NewsFetchException(Exception):

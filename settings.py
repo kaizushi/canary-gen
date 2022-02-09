@@ -22,3 +22,4 @@ news_numitems = 5       #number of news items to include
 news_country = "us"     #news country of origin
 news_category = "technology" #the news topic to use (check newsapi.org for valid ones)
 
+ignorant = "YES"        #you must delete this line
