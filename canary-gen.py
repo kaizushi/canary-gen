@@ -40,7 +40,12 @@ def fetchNews():
         url = url + news_category + "&apiKey="
         url = url + news_apikey
 
-        response = urlopen(url)
+        print("Fetching news sources!")
+        try:
+            response = urlopen(url)
+        except Exception as e:
+            print("Oops!", e.__class__, "occurred.")
+            raise Exception(e)
 
         return response
     
@@ -114,7 +119,11 @@ def createCanaryPlaintext():
         global enable_news
 
         # headlines is called here so it runs first, in case it can't reach the webapi
-        headlines = parseNews(fetchNews())
+        try:
+            headlines = parseNews(fetchNews())
+        except Exception as e:
+            print("There was an error loading the news!")
+            return
 
         filename = canaries + dateString("fn") + "-" + timeString("fn") + ".txt"
         outputFile = filename
