@@ -192,7 +192,8 @@ def createCanaryPlaintext():
 
         # headlines is called here so it runs first, in case it can't reach the webapi
         try:
-            headlines = parseNews(fetchNews())
+            if (enable_news): 
+                headlines = parseNews(fetchNews())
         except NewsFetchException:
             print("Could not fetch news from the Internet. See above for more info. Aborting!")
             return
