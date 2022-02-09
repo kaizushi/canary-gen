@@ -21,11 +21,11 @@ template = "template.tpl"
 canaries = "output/"
 
 #these settings are for the news feature
-enable_news = True
-news_apikey = "a3fb559bd59546769116e74a6fc70c94"
-news_numitems = 5
-news_country = "us"
-news_category = "technology"
+enable_news = False     #set this to True to enable news
+news_apikey = ""        #sign up for newsapi.org and paste the key here
+news_numitems = 5       #number of news items to include
+news_country = "us"     #news country of origin
+news_category = "technology" #the news topic to use (check newsapi.org for valid ones)
 
 global outputFile
 
