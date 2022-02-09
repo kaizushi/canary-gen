@@ -4,29 +4,7 @@ import time
 from urllib.request import urlopen
 import json
 
-# THESE SETTINGS ARE IMPORTANT
-#
-# If you cannot figure out how to set this up you could buy my hosting services.
-# I would be happy to send you the values for below so your canary automatically
-# uploads to your site on my hosting.
-#
-
-realname = "Roger West" #Simple enough
-emails = ["KEY 1", "KEY 2"] #The email or fingerprint of the keys you sign with
-email = "roger@west.com" #Your primary email address
-host = "" #the SSH server used by scp to upload your canary
-path = "" #the location for the canary on the remote server
-
-#template location and a folder to archive your canaries
-template = "template.tpl"
-canaries = "output/"
-
-#these settings are for the news feature
-enable_news = False     #set this to True to enable news
-news_apikey = ""        #sign up for newsapi.org and paste the key here
-news_numitems = 5       #number of news items to include
-news_country = "us"     #news country of origin
-news_category = "technology" #the news topic to use (check newsapi.org for valid ones)
+from settings import realname, emails, host, path, template, canaries, enable_news, news_apikey, news_numitems, news_country, news_category
 
 global outputFile
 
