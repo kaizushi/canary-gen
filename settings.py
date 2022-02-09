@@ -7,7 +7,6 @@
 
 realname = "Roger West" #Simple enough
 emails = ["KEY 1", "KEY 2"] #The email or fingerprint of the keys you sign with
-email = "kaizushi@infantile.us" #Your primary email address
 host = "" #the SSH server used by scp to upload your canary
 path = "" #the location for the canary on the remote server
 
