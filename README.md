@@ -30,4 +30,4 @@ You need to clone this Git repository and edit the canary-gen.py script. There a
 About Kaizushi
 ==============
 
-Cryptography is very important for what I do and that is hosting darkweb sites. For years this canary software has been used to upload mine to my server. You can reach me at <kaizushi@infantile.us> if you need to.
+Cryptography is very important for what I do and that is hosting darkweb sites. For years this canary software has been used to upload mine to my server. You can reach me at <kaizushi@infantile.us> by email if you wish to contact me. I love a good code review! I recommend if you have problems to use Github's issues tracker.
