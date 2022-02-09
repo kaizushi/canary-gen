@@ -4,6 +4,8 @@ import time
 
 from settings import realname, emails, host, path, template, canaries, enable_news, news_apikey, news_numitems, news_country, news_category
 
+cmd_deps = ["gpg2", "scp"]
+
 # below is a bunch of boilerplate stuff
 
 #checks if you have the software you need
@@ -11,12 +13,21 @@ class MissingSoftwareError(Exception):
     """You are missing some of the required software to use this program."""
     pass
 
-if (os.system("command -v gpg2") != 0):
-    print("Could not detect gpg2 in your PATH variable.")
-    raise MissingSoftwareError
 
-if (os.system("command -v scp") != 0):
-    print("Could not detect scp in your PATH variable.")
+def commandCheck(command):
+    if (os.system("command -v " + command + " &> /dev/null") != 0):
+        print("The command '" + command + "' does not exist on your system.")
+        raise MissingSoftwareError
+
+#this loop uses the method above which will show each missing command
+cmd_fail = False
+for cmd in cmd_deps:
+    try:
+        commandCheck(cmd)
+    except MissingSoftwareError:
+        cmd_fail = True
+
+if (cmd_fail):
     raise MissingSoftwareError
 
 # check if the gpg and scp commands exist
