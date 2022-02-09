@@ -20,6 +20,8 @@ This script has the following features...
 
 I highly recommend using it alongside my [picosite](https://github.com/kaizushi/picosite) software which is a 'read only CMS.' Content for it is uploaded using SSH. This makes it seamless for this script to upload the canary.
 
+You can see it in action alongside picosite over at the website for my businesses [canary page](https://kloshost.online/page.php?q=canary). I just run this script to update it and if everything works I need not do anything else.
+
 Getting Started
 ===============
 
