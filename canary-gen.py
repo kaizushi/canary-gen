@@ -196,10 +196,10 @@ def createCanaryPlaintext():
                 headlines = parseNews(fetchNews())
         except NewsFetchException:
             print("Could not fetch news from the Internet. See above for more info. Aborting!")
-            return
+            quit()
         except NewsAPIException:
             print("The newsapi.org web API has reported an error. Aborting!")
-            return
+            quit()
 
         print("News items downloaded...")
 
